@@ -12,6 +12,7 @@ const puppet = new PuppetPadplus({
 })
 
 const name  = 'robot1'
+const lastSpeakTime = {}
 const bot = new Wechaty({
   puppet,
   name,
@@ -45,7 +46,8 @@ bot
             title: '点击进入钱包（请收藏）',
             url
           })
-          await room.say(linkPayload)
+          console.log(`${room.id}wallet`, 'room key')
+          if (checkTime(`${room.id}wallet`)) await room.say(linkPayload)
         }
       
         if (text === '抽奖') {
@@ -59,7 +61,7 @@ bot
             title,
             url
           })
-          await room.say(linkPayload)
+          if (checkTime(`${room.id}lottery`)) await room.say(linkPayload)
         }
       }
     } catch (error) {
@@ -71,3 +73,18 @@ bot
   })
   .start()
   .catch(console.error)
+
+function checkTime(key) {
+  const timestamp = lastSpeakTime[key]
+	if (timestamp) {
+		const timeElapsed = Date.now() / 1000 - timestamp
+		console.log(timeElapsed, '发送消息时间间隔')
+		if (timeElapsed < 30) {
+      return false
+    }
+    lastSpeakTime[key] = Date.now() / 1000
+    return true
+	}
+  lastSpeakTime[key] = Date.now() / 1000
+  return true
+}
