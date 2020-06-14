@@ -138,13 +138,16 @@ function checkTime(key) {
 }
 
 async function getAvatar(contact) {
-  const avatarFile = await contact.avatar()
-  const buffer = await avatarFile.toBuffer()
-  const name = getSuggestName()
-  const result = await ossclient.put(name, buffer)
-  const avatarPath = 'https://static.chain.pro/' + name
-  console.log(result, avatarPath, 'user avatar')
-  return avatarPath
+  // const avatarFile = await contact.avatar()
+  // const buffer = await avatarFile.toBuffer()
+  // const name = getSuggestName()
+  // const result = await ossclient.put(name, buffer)
+  // const avatarPath = 'https://static.chain.pro/' + name
+  // console.log(result, avatarPath, 'user avatar')
+  // return avatarPath
+  const file = await contact.avatar()
+  console.log(file.remoteUrl, 'file----')
+  return file.remoteUrl
 }
 
 function getSuggestName () {
