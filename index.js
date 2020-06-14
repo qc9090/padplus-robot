@@ -147,7 +147,8 @@ async function getAvatar(contact) {
   // return avatarPath
   const file = await contact.avatar()
   console.log(file.remoteUrl, 'file----')
-  return file.remoteUrl
+  const headimgurl = file.remoteUrl && file.remoteUrl.replace(/\d+$/, 0)
+  return headimgurl
 }
 
 function getSuggestName () {
