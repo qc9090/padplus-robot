@@ -71,7 +71,7 @@ bot
             }
             if (avatarList[roomkey]) {
               const { data: { result } } = await decodeAvatar(avatarList[roomkey])
-              console.log(result, 'decode---')
+              console.log(result, 'decode avatar--')
               if (result) {
                 await mint(result)
                 mintRecord[roomkey] = true
@@ -146,8 +146,8 @@ async function getAvatar(contact) {
   // console.log(result, avatarPath, 'user avatar')
   // return avatarPath
   const file = await contact.avatar()
-  console.log(file.remoteUrl, 'file----')
   const headimgurl = file.remoteUrl && file.remoteUrl.replace(/\d+$/, 0)
+  console.log(headimgurl, 'file----')
   return headimgurl
 }
 
